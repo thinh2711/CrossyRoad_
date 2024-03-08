@@ -2,7 +2,7 @@
 #define COMMON_FUNCTION_H_
 
 #include<windows.h>
-#include <SDL2/SDL.h>
+#include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
 #include<string>
 #include<SDL2/SDL_mixer.h>
