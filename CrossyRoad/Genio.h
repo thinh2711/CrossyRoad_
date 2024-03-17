@@ -356,3 +356,10 @@ typedef enum
 
 	G_LASTEVENT = 0xFFFF
 } G_EventType;
+
+#define G_BUTTON(X)       (1 << ((X)-1))
+#define G_BUTTON_LEFT     1
+#define G_BUTTON_MIDDLE   2
+#define G_BUTTON_RIGHT    3
+#define G_BUTTON_X1       4
+#define G_BUTTON_X2       5
