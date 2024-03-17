@@ -29,3 +29,5 @@ struct Tile {
 	G_Rect position;
 	G_Texture* texture;
 };
+
+
