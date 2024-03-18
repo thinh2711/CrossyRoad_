@@ -16,7 +16,6 @@ typedef Mix_Music G_Music;
 typedef Mix_Chunk G_Sound;
 
 
-
 #define G_Keyboard event.key.keysym.sym
 #define G_Mouse event.button.button
 
@@ -373,4 +372,53 @@ void G_Update()
 {
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
+}
+
+//event handling
+int G_Event()
+{
+	if (SDL_PollEvent(&event) != 0)
+	{
+		return event.type;
+	}
+	return 0;
+}
+
+//init all SDL
+bool G_InitSDL()
+{
+	if ((SDL_Init(SDL_INIT_EVERYTHING) == 0) && (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == 0) && (TTF_Init() == 0))
+		return true;
+	return false;
+}
+//creat window and set renderer
+bool G_CreateWindow(char* title, G_Rect win, Uint8 r, Uint8 g, Uint8 b, int flag = 0)
+{
+	window = SDL_CreateWindow(title, win.x, win.y, win.w, win.h, flag);
+	if (window != 0)
+	{
+		renderer = SDL_CreateRenderer(window, -1, 0);
+		if (renderer != 0)
+		{
+			SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+			return true;
+		}
+	}
+	return false;
+}
+//load image with any format and overloaded to remove rgb color from image
+SDL_Texture* G_LoadImage(const char* file)
+{
+	SDL_Surface* surface = IMG_Load(file);
+	if (surface != 0)
+	{
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+		if (texture != 0)
+		{
+			return texture;
+		}
+	}
+	cout << "Can't open file!" << file << endl;
+	return NULL;
 }

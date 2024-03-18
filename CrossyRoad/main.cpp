@@ -50,3 +50,8 @@ int rows, columns;
 int maxScore = 0, score = 0, topScore = 0, coins = 0;
 char chars[10] ; //Used in updateScore();
 bool eagleIntersection = false;
+
+deque<Object> objects ;
+
+
+
