@@ -363,3 +363,14 @@ typedef enum
 #define G_BUTTON_RIGHT    3
 #define G_BUTTON_X1       4
 #define G_BUTTON_X2       5
+
+SDL_Window* window = NULL;
+SDL_Renderer* renderer = NULL;
+SDL_Event event;
+
+//update sceen
+void G_Update()
+{
+	SDL_RenderPresent(renderer);
+	SDL_RenderClear(renderer);
+}
