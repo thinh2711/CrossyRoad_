@@ -1,4 +1,8 @@
 #include "GameInitialization.h"
+#include "Genio.h"
+#include "Rendering.h"
+#include "GameLogic.h"
+
 
 //Constants
 const int TILE_LENGTH = 100; 
@@ -23,5 +27,21 @@ bool eagleIntersection = false;
 
 deque<Object> objects ;
 
+Tile** map1 = NULL;
+GameState state = START;
+G_Rect windowPos;
+G_Rect realPlayerClip = { 30,0,40,100 };
+Object Player;
+Tile grassTile, treeTile, waterTile, roadTile, railTile;
+Object Car, Stick, Train, Lamp, Eagle, Coin;
+G_Texture* car2Texture;
+G_Texture* car3Texture;
+G_Texture* redLampTexture;
+G_Texture* cowTexture;
+G_Texture* sheepTexture;
+G_Texture* pigTexture;
+Element ScoreText, Logo, TryAgainButton, ClickButton, GameOverText, PauseButton, PlayerChooseButton, PlayerButton, CoinText, TopScoreText;
+G_Font* font;
+G_Sound* clickSound;
 
 
