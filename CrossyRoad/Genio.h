@@ -64,10 +64,7 @@ enum
 	GK_EQUALS = '=',
 	GK_GREATER = '>',
 	GK_QUESTION = '?',
-	GK_AT = '@',
-	/*
-	Skip uppercase letters
-	*/
+	GK_AT = '@',g
 	GK_LEFTBRACKET = '[',
 	GK_BACKSLASH = '\\',
 	GK_RIGHTBRACKET = ']',
@@ -421,4 +418,136 @@ SDL_Texture* G_LoadImage(const char* file)
 	}
 	cout << "Can't open file!" << file << endl;
 	return NULL;
+}
+
+SDL_Texture* G_LoadImage(const char *file, Uint8 r, Uint8 g, Uint8 b)
+{
+	SDL_Surface* surface = IMG_Load(file);
+	if (surface != 0)
+	{
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, r, g, b));
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+		if (texture != 0)
+		{
+			return texture;
+		}
+	}
+	return NULL;
+}
+//draw functions(over loaded) based on source and destination kinds (all 4 possible cases)
+void G_Draw(G_Texture* texture, G_Rect *src, G_Rect *dst, bool fullscreen = false)
+{
+	if (!fullscreen)
+		SDL_RenderCopy(renderer, texture, src, dst);
+	else
+		SDL_RenderCopy(renderer, texture, src, 0);
+}
+void G_Draw(G_Texture* texture, G_Rect *dst, bool fullscreen = false)
+{
+	if (!fullscreen)
+		SDL_RenderCopy(renderer, texture, 0, dst);
+	else
+		SDL_RenderCopy(renderer, texture, 0, 0);
+}
+void G_DrawEx(G_Texture* texture, G_Rect *src, G_Rect *dst, SDL_RendererFlip flip, bool fullscreen = false)
+{
+	if (!fullscreen)
+		SDL_RenderCopyEx(renderer, texture, src, dst, 0, 0, flip);
+	else
+		SDL_RenderCopyEx(renderer, texture, src, 0, 0, 0, flip);
+}
+void G_DrawEx(G_Texture* texture, G_Rect *dst, SDL_RendererFlip flip, bool fullscreen = false)
+{
+	if (!fullscreen)
+		SDL_RenderCopyEx(renderer, texture, 0, dst, 0, 0, flip);
+	else
+		SDL_RenderCopyEx(renderer, texture, 0, 0, 0, 0, flip);
+}
+
+
+
+//font
+TTF_Font* G_OpenFont(char* file, int fontSize)
+{
+	return TTF_OpenFont(file, fontSize);
+}
+SDL_Texture* G_LoadFont(G_Font* font, char* title, Uint8 r, Uint8 g, Uint8 b)
+{
+	SDL_Color color;
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	color.a = 255;
+	SDL_Surface* surface = TTF_RenderText_Solid(font, title, color);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+	return texture;
+}
+
+//music
+Mix_Music* G_LoadMusic(char* file)
+{
+	return Mix_LoadMUS(file);
+}
+void G_PlayMusic(G_Music* music, int loop = -1)
+{
+	Mix_PlayMusic(music, loop);
+}
+void G_PauseMusic()
+{
+	Mix_PauseMusic();
+}
+void G_ResumeMusic()
+{
+	Mix_ResumeMusic();
+}
+void G_StopMusic()
+{
+	Mix_HaltMusic();
+}
+void G_FreeMusic(G_Music* music)
+{
+	Mix_FreeMusic(music);
+}
+
+//sound
+Mix_Chunk* G_LoadSound(char* file)
+{
+	return Mix_LoadWAV(file);
+}
+void G_PlaySound(G_Sound* sound, int loop)
+{
+	Mix_PlayChannel(-1, sound, loop);
+}
+void G_PauseSound()
+{
+	Mix_Pause(-1);
+}
+void G_FreeSound(G_Sound* sound)
+{
+	Mix_FreeChunk(sound);
+}
+
+//delay and getticks
+void G_Delay(Uint32 second)
+{
+	SDL_Delay(second);
+}
+Uint32 G_GetTicks()
+{
+	return SDL_GetTicks();
+}
+
+//quit
+void G_DestroyTexture(G_Texture *texture)
+{
+	SDL_DestroyTexture(texture);
+}
+void G_QuitSDL()
+{
+	IMG_Quit();
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
