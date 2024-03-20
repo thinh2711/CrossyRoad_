@@ -1,4 +1,7 @@
 #include "GameInitialization.h"
+#include "Genio.h"
+#include "Rendering.h"
+#include "GameLogic.h"
 
 void load() {
 	grassTile.texture = G_LoadImage("assets/image/grass.png");
@@ -121,5 +124,40 @@ void initTiles()
 			generateTiles(y);
 			addObjects(y);
 		}
+	}
+}
+
+void start()
+{
+	G_Draw(Logo.texture, &Logo.position);
+	G_Draw(ClickButton.texture, &ClickButton.position);
+	G_Draw(PlayerChooseButton.texture, &PlayerChooseButton.position);
+	if (clickOnButton(&PlayerChooseButton.position))
+		state = CHOOSE_PLAYER;
+	else if (gameEvent == G_MOUSEBUTTONDOWN && G_Mouse == G_BUTTON_LEFT)
+		state = PLAY;
+}
+
+void choose_player()
+{
+	int num = 3;
+	PlayerButton.position = { (windowPos.w - (num * 150 - 50)) / 2,(windowPos.h - 100) / 2,100,100 };
+	for (int i = 0; i < num; i++) {
+		switch (i) {
+		case 0: PlayerButton.texture = sheepTexture; break;
+		case 1: PlayerButton.texture = cowTexture; break;
+		case 2: PlayerButton.texture = pigTexture; break;
+		}
+		if (clickOnButton(&PlayerButton.position)) {
+			Player.texture = PlayerButton.texture;
+			state = START;
+			break;
+		}
+		SDL_SetRenderDrawColor(renderer, 0, 196, 255, 255);
+		SDL_RenderFillRect(renderer, &PlayerButton.position);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderDrawRect(renderer, &PlayerButton.position);
+		G_Draw(PlayerButton.texture, &PlayerButton.position);
+		PlayerButton.position.x += 150;
 	}
 }
