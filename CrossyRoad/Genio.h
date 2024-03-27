@@ -1,3 +1,6 @@
+#ifndef GENIO_H
+#define GENIO_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -6,6 +9,10 @@
 #include <string>
 #include <math.h>
 #include <map>
+#include "GameLogic.h"
+#include "Rendering.h"
+#include "Cleanup.h"
+#include "GameInitialization.h"
 
 using namespace std;
 
@@ -64,7 +71,8 @@ enum
 	GK_EQUALS = '=',
 	GK_GREATER = '>',
 	GK_QUESTION = '?',
-	GK_AT = '@',g
+	GK_AT = '@',
+
 	GK_LEFTBRACKET = '[',
 	GK_BACKSLASH = '\\',
 	GK_RIGHTBRACKET = ']',
@@ -233,7 +241,6 @@ enum
 	GK_KP_MEMRECALL = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_KP_MEMRECALL),
 	GK_KP_MEMCLEAR = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_KP_MEMCLEAR),
 	GK_KP_MEMADD = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_KP_MEMADD),
-
 	GK_KP_MEMSUBTRACT =
 	SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_KP_MEMSUBTRACT),
 	GK_KP_MEMMULTIPLY =
@@ -288,48 +295,46 @@ enum
 	GK_EJECT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_EJECT),
 	GK_SLEEP = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_SLEEP)
 };
-
 typedef enum
 {
-	G_FIRSTEVENT = 0,    
-	/* Application events */
+	G_FIRSTEVENT = 0,   
 	G_QUIT = 0x100, 
+
 	G_APP_TERMINATING,       
-	G_APP_LOWMEMORY,          
+	G_APP_LOWMEMORY,         
 	G_APP_WILLENTERBACKGROUND, 
 	G_APP_DIDENTERBACKGROUND, 
 	G_APP_WILLENTERFOREGROUND, 
 	G_APP_DIDENTERFOREGROUND, 
 
-	/* Window events */
 	G_WINDOWEVENT = 0x200, 
-	G_SYSWMEVENT,            
+	G_SYSWMEVENT,             
 
 	/* Keyboard events */
 	G_KEYDOWN = 0x300, 
-	G_KEYUP,                  
+	G_KEYUP,                
 	G_TEXTEDITING,            
-	G_TEXTINPUT,             
+	G_TEXTINPUT,              
 
 	/* Mouse events */
 	G_MOUSEMOTION = 0x400, 
 	G_MOUSEBUTTONDOWN,        
-	G_MOUSEBUTTONUP,         
-	G_MOUSEWHEEL,             
+	G_MOUSEBUTTONUP,          
+	G_MOUSEWHEEL,           
 
 	/* Joystick events */
 	G_JOYAXISMOTION = 0x600, 
 	G_JOYBALLMOTION,          
 	G_JOYHATMOTION,           
-	G_JOYBUTTONDOWN,          
-	G_JOYBUTTONUP,            
+	G_JOYBUTTONDOWN,         
+	G_JOYBUTTONUP,           
 	G_JOYDEVICEADDED,        
 	G_JOYDEVICEREMOVED,       
 
 	/* Game controller events */
 	G_CONTROLLERAXISMOTION = 0x650, 
-	G_CONTROLLERBUTTONDOWN,         
-	G_CONTROLLERBUTTONUP,           
+	G_CONTROLLERBUTTONDOWN,          
+	G_CONTROLLERBUTTONUP,          
 	G_CONTROLLERDEVICEADDED,        
 	G_CONTROLLERDEVICEREMOVED,      
 	G_CONTROLLERDEVICEREMAPPED,      
@@ -341,15 +346,9 @@ typedef enum
 
 	/* Clipboard events */
 	G_CLIPBOARDUPDATE = 0x900, 
-
-	/* Drag and drop events */
 	G_DROPFILE = 0x1000, 
-
-	/* Render events */
-	G_RENDER_TARGETS_RESET = 0x2000, 
-
+	G_RENDER_TARGETS_RESET = 0x2000,
 	G_USEREVENT = 0x8000,
-
 	G_LASTEVENT = 0xFFFF
 } G_EventType;
 
@@ -359,6 +358,7 @@ typedef enum
 #define G_BUTTON_RIGHT    3
 #define G_BUTTON_X1       4
 #define G_BUTTON_X2       5
+
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
@@ -371,7 +371,6 @@ void G_Update()
 	SDL_RenderClear(renderer);
 }
 
-//event handling
 int G_Event()
 {
 	if (SDL_PollEvent(&event) != 0)
@@ -388,7 +387,7 @@ bool G_InitSDL()
 		return true;
 	return false;
 }
-//creat window and set renderer
+
 bool G_CreateWindow(char* title, G_Rect win, Uint8 r, Uint8 g, Uint8 b, int flag = 0)
 {
 	window = SDL_CreateWindow(title, win.x, win.y, win.w, win.h, flag);
@@ -403,7 +402,7 @@ bool G_CreateWindow(char* title, G_Rect win, Uint8 r, Uint8 g, Uint8 b, int flag
 	}
 	return false;
 }
-//load image with any format and overloaded to remove rgb color from image
+
 SDL_Texture* G_LoadImage(const char* file)
 {
 	SDL_Surface* surface = IMG_Load(file);
@@ -419,7 +418,6 @@ SDL_Texture* G_LoadImage(const char* file)
 	cout << "Can't open file!" << file << endl;
 	return NULL;
 }
-
 SDL_Texture* G_LoadImage(const char *file, Uint8 r, Uint8 g, Uint8 b)
 {
 	SDL_Surface* surface = IMG_Load(file);
@@ -435,7 +433,7 @@ SDL_Texture* G_LoadImage(const char *file, Uint8 r, Uint8 g, Uint8 b)
 	}
 	return NULL;
 }
-//draw functions(over loaded) based on source and destination kinds (all 4 possible cases)
+
 void G_Draw(G_Texture* texture, G_Rect *src, G_Rect *dst, bool fullscreen = false)
 {
 	if (!fullscreen)
@@ -551,3 +549,6 @@ void G_QuitSDL()
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
+
+
+#endif // GENIO_H
