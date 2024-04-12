@@ -21,28 +21,18 @@ string chooseWord(const string& fileName, int difficult) {
     if (!file.is_open())
         return "";
 
-    string line;
-    while (getline(file, line)) {
-        if (!line.empty())
+    while (!file.eof()) {
+        string line;
+        getline(file, line);
+        if (file && !line.empty())
             vocabulary.push_back(normalize(line));
     }
 
-    file.close();
-
-    if (vocabulary.empty())
-        return "";
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, vocabulary.size() - 1);
-
-    string word;
-    do {
-        word = vocabulary[dis(gen)];
-    } while ((word.length() > 5 && difficult) || (word.length() < 5 && !difficult));
-
-    return word;
+    int n = vocabulary.size();
+    string word = vocabulary[rand() % n];
+    return n > 0 ? ((word.length() > 5 && difficult) || (word.length() < 5 && !difficult) ? word : chooseWord(fileName, difficult)) : "";
 }
+
 bool contains(string word, char guess) {
     return (word.find(guess) != string::npos);
 }
