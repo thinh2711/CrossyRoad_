@@ -43,3 +43,15 @@ void HangmanGame::guessEvent() {
     }
 }
 
+void HangmanGame::badGuessed() {
+    badGuessCount++;
+    badGuess += guessChar;
+    guessedString += guessChar;
+}
+
+bool HangmanGame::guessing() {
+    if(guessedWord != secretword && badGuessCount < MAX_BAD_GUESS && gameplay) {
+        return true;
+    }
+    return false;
+}
