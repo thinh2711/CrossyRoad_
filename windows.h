@@ -12,20 +12,20 @@ using namespace std;
 class WINDOWS {
     SDL_Window* window;
     SDL_Renderer* renderer;
-
+    TTF_Font* font;
     DRAW* draw;
     string title;
     int width;
     int height;
 
    public:
-    WINDOWS(string title_, int width_, int height_);
+    WINDOWS (string title_, int width_, int height_);
     ~WINDOWS();
-    void wrongSDL(ostream& os, const string& msg, bool fatal);
-
-    void createTextTexture(string text, int x, int y);
+    void wrongSDL(ostream& os, const string& msg, bool check);
+    void Font(string a, int size);
+    void createTextTexture(string text, int x_, int y_);
     void createImageBackground(string fileName);
-    void createImage(string fileName, int x, int y);
+    void createImage(string fileName, int x_, int y_);
     void updateScreen();
 };
 
