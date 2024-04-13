@@ -32,7 +32,7 @@ class DRAW {
     TTF_Font* font;
 
    public:
-    DRAW(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font);
+    DRAW (SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font);
 
     void setPosition(float x, float y);
     float getX() const { return x; }
