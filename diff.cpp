@@ -17,7 +17,7 @@ string normalize(const string& s) {
 
 string chooseWord(const string& fileName, int difficult) {
     vector<string> vocabulary;
-    ifstream file("words\\" + fileName);
+    ifstream file("word\\" + fileName);
     if (!file.is_open())
         return "";
 
@@ -29,10 +29,17 @@ string chooseWord(const string& fileName, int difficult) {
     }
 
     int n = vocabulary.size();
-    string word = vocabulary[rand() % n];
-    return n > 0 ? ((word.length() > 5 && difficult) || (word.length() < 5 && !difficult) ? word : chooseWord(fileName, difficult)) : "";
+    if (n > 0) {
+        string word;
+        do {
+            word = vocabulary[rand() % n];
+        } while ((word.length() > 5 && difficult) || (word.length() < 5 && !difficult));
+        return word;
+    } else {
+        return "";
+    }
 }
 
-bool contains(string word, char guess) {
+bool contain(string word, char guess) {
     return (word.find(guess) != string::npos);
 }
