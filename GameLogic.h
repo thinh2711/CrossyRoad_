@@ -8,79 +8,36 @@ using namespace std;
 
 //Hangman game class
 class HangmanGame {
-    WINDOWS* window;
-    const int MAX_BAD_GUESS = 7;
-    string word;
-    string secretWord;
-    string correctChars;
-    string incorrectChars;
-    int incorrectGuess;
-    bool isGameOver;
-    bool isGameWon;
+    const int MAX_BAD_GUESS = 7;  
+    string fileName; 
+    string name;
+    int diff = -1;  
+    WINDOWS* SDL;
+
+    int playTime;                 // Playing time of Game
+    int countwin;                 // Number of win games
+    int countloss;                // Number of loss games
+    bool quit;                    // If player want to quit Game
+    string secretword;            // The random word has to be guessed
+    char guessChar;               // Character player pressed
+    string guessedWord;           // Guessed word include suggested characters
+    string guessedString;         // Guessed word exclude suggested characters
+    int badGuessCount;            // Number of bad guesses made by the player
+    int suggested;                // Number of suggested characters
+    int maxSuggest;               // Maximum number of suggestions
+    string badGuess;              // Bad guessed characters
+
 
    public:
-    Game(WINDOWS* window_);
-    void startGame();
-    void processInput(char ch);
-    void drawGame();
-    void drawGameOver();
-    void drawGameWon();
-    void drawGameLost();
-    void drawSecretWord();
-    void drawIncorrectChars();
-    void drawHangman();
-    void drawHangmanBody();
-    void drawHangmanHead();
-    void drawHangmanBodyPart(int x1, int y1, int x2, int y2);
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-    void drawHangmanArm();
-    void drawHangmanLeg();
-    void drawHangmanRope();
-    void drawHangmanBase();
-    void drawHangmanPole();
-    void drawHangmanHead();
-    void drawHangmanBody();
-}
+    HangmanGame(WINDOWS* ,int);
+    bool gameplay;
+    void startGame();                   // initialize new Game
+    void initWord();                    // initialize word need guessing
+    void getSuggest();                  // get a suggestion
+    void updateGuessedWord();           // update guessed word
+    void updateSuggest();               // update maximum number of suggestions
+    bool guessing();                    // determine whether the player is guessing or not
+    void renderGameSDL();               // render playing game window
+};
 
 #endif  // GAMELOGIC_H
