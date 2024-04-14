@@ -13,6 +13,7 @@ HangmanGame::HangmanGame(WINDOWS* WINDOWS, int time) : SDL(WINDOWS), playTime(ti
     countwin = 0;
     countloss = 0;
 }
+
 void HangmanGame::initWord() {
     word = chooseWord(fileName, diff);
     if (word.empty()) {
@@ -134,5 +135,34 @@ void HangmanGame::getSuggest() {
                 break;
             }
         }
+    }
+}
+
+void HangmanGame::renderGameSDL() {
+    SDL->createImageBackground("hang" + to_string(badGuessCount) + ".png");
+
+    SDL->createTextTexture("Win : " + to_string(countwin), 750, 45);
+    SDL->createTextTexture("Loss: " + to_string(countloss), 750, 85);
+    SDL->createTextTexture("Current Guess    :     " + guessedWord, 100, 750);
+    SDL->createTextTexture("Bad Guesses      :     " + badGuess, 100, 800);
+    SDL->createTextTexture("Used suggestions :     " + to_string(suggested) + "/" + to_string(maxSuggest) + "   (Press 'Space')", 100, 850);
+    SDL->updateScreen();
+}
+
+void HangmanGame::checkContinue(SDL_Event e) {
+    while (SDL_PollEvent(&e)) 
+    {
+        if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)) 
+        {
+            gameplay = false;
+            quit = true;
+        } else if (e.type == SDL_KEYUP &&
+                   (e.key.keysym.sym == SDLK_RETURN ||
+                    e.key.keysym.sym == SDLK_RETURN2 ||
+                    e.key.keysym.sym == SDLK_KP_ENTER)) 
+                    {
+                        gameplay = true;
+                        quit = true;
+                    }
     }
 }
