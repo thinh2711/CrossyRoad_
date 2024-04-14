@@ -167,12 +167,23 @@ void HangmanGame::checkContinue(SDL_Event e) {
     }
 }
 
+void HangmanGame::choosefileName() {
+    fileName = "";
+    while (fileName == "" && gameplay && !quit) {
+        renderfileName();
+        choosefileNameEvent();
+    }
+}
 
 void HangmanGame::choosefileNameEvent() {
     SDL_Event event;
     if (SDL_WaitEvent(&event)) 
     {
-        if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
+        if (event.type == SDL_QUIT) 
+        {
+            gameplay = false;
+            quit = true;
+        } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
             {
                 gameplay = false;
             } else if (event.type == SDL_KEYUP) 
@@ -216,4 +227,5 @@ void HangmanGame::renderfileName() {
     window->createTextTexture("3. Asia Countries", 150, 200);
     window->createTextTexture("4. Jobs", 150, 250);
     window->createTextTexture("5. Plants", 150, 300);
+    window->updateScreen();
 }
