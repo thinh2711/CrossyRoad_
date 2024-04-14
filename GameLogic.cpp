@@ -54,4 +54,58 @@ bool HangmanGame::guessing() {
         return true;
     }
     return false;
+}\
+
+void HangmanGame::updateSuggest() {
+    if (suggested < maxSuggest) 
+    {
+        int suggest = 0, sizeofsecret = guessedWord.length();
+        unordered_map<char, int> map;
+        for (int i = 0; i < sizeofsecret; i++)
+            {
+                if (guessedWord[i] == '-')
+                    map[secretword[i]]++;
+            }
+        suggest = map.size();
+        maxSuggest = suggest / 2;
+    }
+    if (suggested > maxSuggest) 
+    {
+        maxSuggest = suggested;
+    }
+}
+
+void HangmanGame::updateGuessedWord() {
+    int size = guessedWord.length(), countguessChar = 0;
+    for (int i = 0; i < size; i++) {
+        if (secretword[i] == guessChar) {
+            guessedWord[i] = guessChar;
+            countguessChar++;
+        }
+    }
+    guessedString += guessChar;
+}
+
+void HangmanGame::startGame() {
+    quit = false;
+    if(quit){
+        return;
+    }
+    system("cls");
+    
+    initWord();
+    guessedWord = string(secretword.length(), '-');
+    guessChar = '';
+    badGuessCount = 0;
+    maxSuggest = 10;
+    badGuess = "";
+    suggested = 0;
+    guessedString = "";
+    
+    for (unsigned int i = 0; i < word.length(); i++)
+        {
+            if (word[i] == ' ')
+                guessedWord[i] = ' ';
+        }
+    updateSuggest();
 }
