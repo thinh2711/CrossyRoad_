@@ -41,11 +41,18 @@ class HangmanGame {
     void handleGuess();                 // handle guessing character
     void badGuessed();                  // handle bad guessed
     void gameOver();                    // initialize game over
+    void checkContinue(SDL_Event);      // check if player want to continue playing game
     
     void renderGameSDL();               // render playing game window
-    void chooseDifficulty();            // Choose the difficulty of random word
-    void renderDifficulty();            // render difficulty window
-    void DifficultyEvent();       // handle choose difficulty event
+    void renderGameOverSDL(int);        // render game over window
+    void createGameOverSDL();           // initialize game over loop for rendering
+
+    void choosefileName();              // Choose file of random word
+    void renderfileName();              // render file window
+    void choosefileNameEvent();         // handle choose file event
+    void chooseDiff();                  // Choose the difficulty of random word
+    void renderDiff();                  // render difficulty window
+    void chooseDiffEvent();             // handle choose difficulty event
 };
 
 #endif  // GAMELOGIC_H

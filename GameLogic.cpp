@@ -8,15 +8,15 @@
 
 using namespace std;
 
-HangmanGame::HangmanGame(WINDOWS* WINDOWS, int time) : SDL(WINDOWS), playTime(time) {
+HangmanGame::HangmanGame(WINDOWS* WINDOWS, int time) : window(WINDOWS), playTime(time) {
     gameplay = true;
     countwin = 0;
     countloss = 0;
 }
 
 void HangmanGame::initWord() {
-    word = chooseWord(fileName, diff);
-    if (word.empty()) {
+    secretword = chooseWord(fileName, diff);
+    if (secretword.empty()) {
         cout << "No word available in " << fileName << endl;
         gameplay = false;
         quit = true;
@@ -55,7 +55,7 @@ bool HangmanGame::guessing() {
         return true;
     }
     return false;
-}\
+}
 
 void HangmanGame::updateSuggest() {
     if (suggested < maxSuggest) 
@@ -97,7 +97,7 @@ void HangmanGame::startGame() {
     
     initWord();
     guessedWord = string(secretword.length(), '-');
-    guessChar = '';
+    guessChar = ' ';
     badGuessCount = 0;
     maxSuggest = 10;
     badGuess = "";
@@ -139,14 +139,14 @@ void HangmanGame::getSuggest() {
 }
 
 void HangmanGame::renderGameSDL() {
-    SDL->createImageBackground("hang" + to_string(badGuessCount) + ".png");
+    window->createImageBackground("hang" + to_string(badGuessCount) + ".png");
 
-    SDL->createTextTexture("Win : " + to_string(countwin), 750, 45);
-    SDL->createTextTexture("Loss: " + to_string(countloss), 750, 85);
-    SDL->createTextTexture("Current Guess    :     " + guessedWord, 100, 750);
-    SDL->createTextTexture("Bad Guesses      :     " + badGuess, 100, 800);
-    SDL->createTextTexture("Used suggestions :     " + to_string(suggested) + "/" + to_string(maxSuggest) + "   (Press 'Space')", 100, 850);
-    SDL->updateScreen();
+    window->createTextTexture("Win : " + to_string(countwin), 750, 45);
+    window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
+    window->createTextTexture("Current Guess    :     " + guessedWord, 100, 750);
+    window->createTextTexture("Bad Guesses      :     " + badGuess, 100, 800);
+    window->createTextTexture("Used suggestions :     " + to_string(suggested) + "/" + to_string(maxSuggest) + "   (Press 'Space')", 100, 850);
+    window->updateScreen();
 }
 
 void HangmanGame::checkContinue(SDL_Event e) {
@@ -165,4 +165,55 @@ void HangmanGame::checkContinue(SDL_Event e) {
                         quit = true;
                     }
     }
+}
+
+
+void HangmanGame::choosefileNameEvent() {
+    SDL_Event event;
+    if (SDL_WaitEvent(&event)) 
+    {
+        if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
+            {
+                gameplay = false;
+            } else if (event.type == SDL_KEYUP) 
+                {
+                    string key = SDL_GetKeyName(event.key.keysym.sym);
+                    if (key.length() == 1 && key[0] >= '1' && key[0] <= '5')
+                        {
+                            switch (key[0])
+                            {
+                            case '1':
+                                fileName = "all.txt";
+                                name = "All fields";
+                                break;
+                            case '2':
+                                fileName = "fruits.txt";
+                                name = "Fruits";
+                                break;
+                            case '3':
+                                fileName = "asia.txt";
+                                name = "Asia Countries";
+                                break;
+                            case '4':
+                                fileName = "jobs.txt";
+                                name = "Jobs";
+                                break;
+                            case '5':
+                                fileName = "plants.txt";
+                                name = "Plants";
+                                break;
+                            }
+                        }
+                }
+    }
+}
+
+void HangmanGame::renderfileName() {
+    window->createImageBackground("hang0.png");
+    window->createTextTexture("Choose word category:", 100, 50);
+    window->createTextTexture("1. All fields", 150, 100);
+    window->createTextTexture("2. Fruits", 150, 150);
+    window->createTextTexture("3. Asia Countries", 150, 200);
+    window->createTextTexture("4. Jobs", 150, 250);
+    window->createTextTexture("5. Plants", 150, 300);
 }
