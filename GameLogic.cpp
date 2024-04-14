@@ -229,3 +229,23 @@ void HangmanGame::renderfileName() {
     window->createTextTexture("5. Plants", 150, 300);
     window->updateScreen();
 }
+
+void HangmanGame::handleGuess() {
+    if (guessChar == ' ') return;
+    
+    if (guessChar == '$')
+        {
+            getSuggest();
+        }else if (contains(guessedStr, guessChar))
+            {
+                return;
+            }else if (contains(word, guessChar)) 
+                {
+                    updateGuessedWord();
+                    updateSuggest();
+                } else if (!contains(badGuess, guessChar)) 
+                    {
+                        badGuessed();
+                    }
+    
+}
