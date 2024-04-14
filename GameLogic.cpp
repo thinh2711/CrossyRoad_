@@ -69,7 +69,7 @@ void HangmanGame::updateSuggest() {
         suggest = map.size();
         maxSuggest = suggest / 2;
     }
-    if (suggested > maxSuggest) 
+    if (suggested >= maxSuggest) 
     {
         maxSuggest = suggested;
     }
@@ -78,7 +78,8 @@ void HangmanGame::updateSuggest() {
 void HangmanGame::updateGuessedWord() {
     int size = guessedWord.length(), countguessChar = 0;
     for (int i = 0; i < size; i++) {
-        if (secretword[i] == guessChar) {
+        if (secretword[i] == guessChar) 
+        {
             guessedWord[i] = guessChar;
             countguessChar++;
         }
@@ -102,10 +103,36 @@ void HangmanGame::startGame() {
     suggested = 0;
     guessedString = "";
     
-    for (unsigned int i = 0; i < word.length(); i++)
+    for (unsigned int i = 0; i < secretword.length(); i++)
         {
-            if (word[i] == ' ')
+            if (secretword[i] == ' ')
                 guessedWord[i] = ' ';
         }
     updateSuggest();
+}
+
+void HangmanGame::gameOver() {
+    if (guessedWord != secretword)
+        {
+            countloss++;
+        }
+    else
+        countwin++;
+}
+
+void HangmanGame::getSuggest() {
+    if (suggested < maxSuggest) 
+    {
+        suggested++;
+        while (1) 
+        {
+            int i = rand() % guessedWord.length();
+            if (guessedWord[i] == '-') 
+            {
+                guessChar = secretword[i];
+                updateGuessedWord();
+                break;
+            }
+        }
+    }
 }

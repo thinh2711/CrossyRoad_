@@ -12,7 +12,7 @@ class HangmanGame {
     string fileName; 
     string name;
     int diff = -1;  
-    WINDOWS* SDL;
+    WINDOWS* window;
 
     int playTime;                 // Playing time of Game
     int countwin;                 // Number of win games
@@ -37,7 +37,15 @@ class HangmanGame {
     void updateGuessedWord();           // update guessed word
     void updateSuggest();               // update maximum number of suggestions
     bool guessing();                    // determine whether the player is guessing or not
+    void guessEvent();                  // handle guessing event
+    void handleGuess();                 // handle guessing character
+    void badGuessed();                  // handle bad guessed
+    void gameOver();                    // initialize game over
+    
     void renderGameSDL();               // render playing game window
+    void chooseDifficulty();            // Choose the difficulty of random word
+    void renderDifficulty();            // render difficulty window
+    void DifficultyEvent();       // handle choose difficulty event
 };
 
 #endif  // GAMELOGIC_H
