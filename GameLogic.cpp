@@ -178,15 +178,15 @@ void HangmanGame::checkContinue(SDL_Event e) {
 void HangmanGame::choosefileName() {
     fileName = "";
     while (fileName == "" && gameplay && !quit) {
-        if(diff == 0)
+        if(diff == 0 )
         {
             renderfileNameEasy();
             choosefileNameEvent();
         }
         else if(diff == 1)
         {
-            renderfileNameEasy();
-            choosefileNameEvent();
+            renderfileNameHard();
+            choosefileNameEventHard();
         }
     }
 }
@@ -206,7 +206,7 @@ void HangmanGame::choosefileNameEvent() {
                 {   
                     string key = SDL_GetKeyName(event.key.keysym.sym);
 
-                    if (key.length() == 1 && diff == 0 && key[0] >= '1' && key[0] <= '5')
+                    if (key.length() == 1 && key[0] >= '1' && key[0] <= '5')
                     {
                         switch (key[0])
                         {
@@ -232,7 +232,27 @@ void HangmanGame::choosefileNameEvent() {
                             break;
                         }
                     }
-                    else if (key.length() == 1 && diff == 1 && key[0] >= '1' && key[0] <= '5')
+                    
+                }
+    }
+}
+
+void HangmanGame::choosefileNameEventHard() {
+    SDL_Event event;
+    if (SDL_WaitEvent(&event)) 
+    {
+        if (event.type == SDL_QUIT) 
+        {
+            gameplay = false;
+            quit = true;
+        } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
+            {
+                gameplay = false;
+            } else if (event.type == SDL_KEYUP) 
+                {   
+                    string key = SDL_GetKeyName(event.key.keysym.sym);
+
+                    if (key.length() == 1 && key[0] >= '1' && key[0] <= '5')
                     {
                         switch (key[0])
                         {
@@ -242,22 +262,23 @@ void HangmanGame::choosefileNameEvent() {
                             break;
                         case '2':
                             fileName = "fruitsDiff.txt";
-                            name = "Fruits Difficult";
-                            break;
+                            name = "Fruits Hard";
+                                break;
                         case '3':
                             fileName = "asiaDiff.txt";
-                            name = "Asia Countries Difficult";
+                            name = "Asia Countries Hard";
                             break;
                         case '4':
                             fileName = "jobsDiff.txt";
-                            name = "Jobs Difficult";
+                            name = "Jobs Hard";
                             break;
                         case '5':
                             fileName = "plantsDiff.txt";
-                            name = "Plants Difficult";
+                            name = "Plants Hard";
                             break;
                         }
                     }
+                    
                 }
     }
 }
@@ -270,6 +291,17 @@ void HangmanGame::renderfileNameEasy() {
     window->createTextTexture("3. Asia Countries", 150, 200);
     window->createTextTexture("4. Jobs", 150, 250);
     window->createTextTexture("5. Plants", 150, 300);
+    window->updateScreen();
+}
+
+void HangmanGame::renderfileNameHard() {
+    window->createImageBackground("hang0.png");
+    window->createTextTexture("Choose word category:", 100, 50);
+    window->createTextTexture("1. All fields", 150, 100);
+    window->createTextTexture("2. Fruits Hard", 150, 150);
+    window->createTextTexture("3. Asia Countries Hard", 150, 200);
+    window->createTextTexture("4. Jobs Hard", 150, 250);
+    window->createTextTexture("5. Plants Hard", 150, 300);
     window->updateScreen();
 }
 

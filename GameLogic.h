@@ -52,9 +52,11 @@ class HangmanGame {
 
     void choosefileName();              // Choose file of random word
     void renderfileNameEasy();              // render file window easy
-    // void renderfileNameHard();              // render file window hard
+    void renderfileNameHard();              // render file window hard
 
     void choosefileNameEvent();         // handle choose file event
+    void choosefileNameEventHard();     // handle choose hard file event
+
     void chooseDiff();                  // Choose the difficulty of random word
     void renderDiff();                  // render difficulty window
     void chooseDiffEvent();             // handle choose difficulty event
