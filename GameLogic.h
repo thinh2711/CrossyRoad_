@@ -26,7 +26,6 @@ class HangmanGame {
     int suggested;                // Number of suggested characters
     int maxSuggest;               // Maximum number of suggestions
     string badGuess;              // Bad guessed characters
-    
 
    public:
     HangmanGame(WINDOWS* ,int);

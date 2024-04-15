@@ -90,7 +90,8 @@ void HangmanGame::updateGuessedWord() {
 
 void HangmanGame::startGame() {
     quit = false;
-    if(quit){
+    if(quit)
+    {
         return;
     }
     system("cls");
@@ -236,16 +237,39 @@ void HangmanGame::handleGuess() {
     if (guessChar == '$')
         {
             getSuggest();
-        }else if (contains(guessedStr, guessChar))
+        }else if (contain(guessedString, guessChar))
             {
                 return;
-            }else if (contains(word, guessChar)) 
+            }else if (contain(secretword, guessChar)) 
                 {
                     updateGuessedWord();
                     updateSuggest();
-                } else if (!contains(badGuess, guessChar)) 
+                } else if (!contain(badGuess, guessChar)) 
                     {
                         badGuessed();
                     }
     
+}
+
+void HangmanGame::chooseDiffEvent() {
+    SDL_Event event;
+    if (SDL_WaitEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            gameplay = false;
+            quit = true;
+        } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) {
+            playing = false;
+        } else if (event.type == SDL_KEYUP) {
+            string keyName = SDL_GetKeyName(event.key.keysym.sym);
+            if (keyName.length() == 1 && keyName[0] >= '1' && keyName[0] <= '5')
+                switch (keyName[0]) {
+                    case '1':
+                        diff = 0;
+                        break;
+                    case '2':
+                        diff = 1;
+                        break;
+                }
+        }
+    }
 }
