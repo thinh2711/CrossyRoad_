@@ -108,7 +108,10 @@ void HangmanGame::startGame() {
     for (unsigned int i = 0; i < secretword.length(); i++)
         {
             if (secretword[i] == ' ')
+            {
                 guessedWord[i] = ' ';
+            }
+                
         }
     updateSuggest();
 }
@@ -233,7 +236,8 @@ void HangmanGame::renderfileName() {
 }
 
 void HangmanGame::handleGuess() {
-    if (guessChar == ' ') return;
+    if (guessChar == ' ') 
+        return;
     
     if (guessChar == '$')
         {
@@ -263,6 +267,7 @@ void HangmanGame::chooseDiffEvent() {
         } else if (event.type == SDL_KEYUP) {
             string key = SDL_GetKeyName(event.key.keysym.sym);
             if (key.length() == 1 && key[0] >= '1' && key[0] <= '5')
+            {
                 switch (key[0]) {
                     case '1':
                         diff = 0;
@@ -271,6 +276,7 @@ void HangmanGame::chooseDiffEvent() {
                         diff = 1;
                         break;
                 }
+            }
         }
     }
 }
@@ -293,20 +299,41 @@ void HangmanGame::chooseDiff() {
 }
 
 void HangmanGame::renderGameOverSDL(int imageIndx) {
-    std::string status;
+    string status;
     if (guessedWord == secretword) 
     {
         status = "free";
     } else {
         status = "hanged";
     }
+    if (timeLeft <= 0)
+    {
+        window->createTextTexture("Time Up!!!", 750, 5);
+    }
+    window->createTextTexture("Win : " + to_string(countwin), 750, 45);
+    window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
+
     window->createImageBackground(status + to_string(imageIndx) + ".png");
     
     if (guessedWord == secretword)
+    {
         window->createTextTexture("Congrats!!! You are free.", 100, 750);
-    else
+    }
+    else   {
         window->createTextTexture("Game Over!!! You are hanged!", 100, 750);
+    }
     window->createTextTexture("Correct word: " + secretword, 100, 800);
     window->createTextTexture("Press 'Enter' to keep playing, 'ESC' to exit.", 100, 850);
     window->updateScreen();
+}
+
+void HangmanGame::createGameOverSDL() {
+    int imageIndx = 0;
+    while (!quit) {
+        SDL_Event e;
+        checkContinue(e);
+        renderGameOverSDL(imageIndx);
+        SDL_Delay(200);
+        ++imageIndx %= 4;
+    }
 }

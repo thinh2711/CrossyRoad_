@@ -26,6 +26,10 @@ class HangmanGame {
     int suggested;                // Number of suggested characters
     int maxSuggest;               // Maximum number of suggestions
     string badGuess;              // Bad guessed characters
+    int timeLeft;                 // Time left for playing game
+    time_t startTime;             // Start time of game
+    int animatedTime;             // Time of animations made by player
+
 
    public:
     HangmanGame(WINDOWS* ,int);
@@ -52,6 +56,9 @@ class HangmanGame {
     void chooseDiff();                  // Choose the difficulty of random word
     void renderDiff();                  // render difficulty window
     void chooseDiffEvent();             // handle choose difficulty event
+
+    void renderPlane(char, int);        // render flying plane
+    void planeEvent(SDL_Event, bool&);  // handle event while the plane is flying
 };
 
 #endif  // GAMELOGIC_H
