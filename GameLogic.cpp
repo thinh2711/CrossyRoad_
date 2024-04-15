@@ -148,6 +148,7 @@ void HangmanGame::renderGameSDL() {
     window->createTextTexture("Bad Guesses      :     " + badGuess, 100, 800);
     window->createTextTexture("Used suggestions :     " + to_string(suggested) + "/" + to_string(maxSuggest) + "   (Press 'Space')", 100, 850);
     window->updateScreen();
+    SDL_Delay(15);
 }
 
 void HangmanGame::checkContinue(SDL_Event e) {
@@ -286,7 +287,26 @@ void HangmanGame::renderDiff() {
 void HangmanGame::chooseDiff() {
     diff = -1;
     while (diff == -1 && gameplay && !quit) {
-        renderDifficulty();
-        chooseDifficultyEvent();
+        renderDiff();
+        chooseDiffEvent();
     }
+}
+
+void HangmanGame::renderGameOverSDL(int imageIndx) {
+    std::string status;
+    if (guessedWord == secretword) 
+    {
+        status = "free";
+    } else {
+        status = "hanged";
+    }
+    window->createImageBackground(status + to_string(imageIndx) + ".png");
+    
+    if (guessedWord == secretword)
+        window->createTextTexture("Congrats!!! You are free.", 100, 750);
+    else
+        window->createTextTexture("Game Over!!! You are hanged!", 100, 750);
+    window->createTextTexture("Correct word: " + secretword, 100, 800);
+    window->createTextTexture("Press 'Enter' to keep playing, 'ESC' to exit.", 100, 850);
+    window->updateScreen();
 }
