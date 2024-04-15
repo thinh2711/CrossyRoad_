@@ -95,6 +95,7 @@ void HangmanGame::startGame() {
         return;
     }
     system("cls");
+    chooseDiff();
     choosefileName();
     
     initWord();
@@ -124,6 +125,7 @@ void HangmanGame::gameOver() {
         }
     else
         countwin++;
+    createGameOverSDL();
 }
 
 void HangmanGame::getSuggest() {
@@ -259,7 +261,8 @@ void HangmanGame::handleGuess() {
 
 void HangmanGame::chooseDiffEvent() {
     SDL_Event event;
-    if (SDL_WaitEvent(&event)) {
+    if (SDL_WaitEvent(&event)) 
+    {
         if (event.type == SDL_QUIT) {
             gameplay = false;
             quit = true;
@@ -284,7 +287,7 @@ void HangmanGame::chooseDiffEvent() {
 
 void HangmanGame::renderDiff() {
     window->createImageBackground("hang0.png");
-    window->createTextTexture("Category: " + name , 100, 50);
+    // window->createTextTexture("Category: " + name , 100, 50);
     window->createTextTexture("Choose word difficulty:", 100, 100);
     window->createTextTexture("1. Easy", 150, 150);
     window->createTextTexture("2. Hard", 150, 200);
