@@ -119,3 +119,28 @@ void DRAW::jumpForward(double length) {
     x += (cos(rad) * length);
     y -= (sin(rad) * length);
 }
+
+void DRAW::drawSquare(double size) {
+    for (int i = 0; i < 4; ++i) {
+        turnLeft(90);
+        moveForward(size);
+    }
+}
+
+void DRAW::drawParallelogram(double size) {
+    for (int i = 0; i < 2; ++i) {
+        moveForward(size);
+        turnLeft(60);
+        moveForward(size);
+        turnLeft(120);
+    }
+}
+void DRAW::drawCircle (double rad) {
+    double prevX = x, prevY = y;
+    for (int i = 0; i < 360; i++) {
+        x = prevX + rad * cos(i * M_PI / 180);
+        y = prevY - rad * sin(i * M_PI / 180);
+        SDL_RenderDrawPoint(renderer, (int)x, (int)y);
+    }
+}
+

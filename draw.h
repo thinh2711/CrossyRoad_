@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 #include <string>
 
@@ -22,9 +22,9 @@ const SDL_Color GREEN_COLOR = {0, 128, 0};
 const SDL_Color DEFAULT_COLOR = BLACK_COLOR;
 
 class DRAW {
-    float x;
-    float y;
-    float angle;
+    double x;
+    double y;
+    double angle;
     int width;
     int height;
     SDL_Color color;
@@ -34,47 +34,72 @@ class DRAW {
    public:
     DRAW (SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font);
 
-    void setPosition(float x, float y);
-    float getX() const { return x; }
-    float getY() const { return y; }
+    void setPosition(double x, double y);
+    double getX() const 
+    { 
+        return x; 
+    }
+    double getY() const 
+    { 
+        return y; 
+    }
 
-    void setAngle(float angle);
-    float getAngle() const { return angle; }
+    void setAngle(double angle);
+    double getAngle() const 
+    { 
+        return angle; 
+    }
 
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
+    int getWidth() const 
+    { 
+        return width; 
+    }
+    int getHeight() const 
+    { 
+        return height; 
+    }
 
     void setColor(SDL_Color color);
-    SDL_Color getColor() const { return color; }
+    SDL_Color getColor() const 
+    { 
+        return color; 
+    }
 
-    SDL_Renderer* getRenderer() const { return renderer; }
+    SDL_Renderer* getRenderer() const 
+    { 
+        return renderer; 
+    }
 
     void clearWithBgColor(SDL_Color color);
 
-    void moveForward(float length);
-    void jumpForward(float length);
-    void moveBackward(float length) {
+    void moveForward(double length);
+    void jumpForward(double length);
+    void moveBackward(double length) 
+    {
         moveForward(-length);
     }
-    void jumpBackward(float length) {
+    void jumpBackward(double length) 
+    {
         jumpForward(-length);
     }
-    void turnLeft(float angle) {
+    void turnLeft(double angle)
+    {
         setAngle(this->angle + angle);
     }
-    void turnRight(float angle) {
+    void turnRight(double angle) 
+    {
         turnLeft(-angle);
     }
 
-    void setRandomColor();
+    void getRandomColor();
 
-    void createCircle(float radius);
-    void createSquare(float size);
-    void createParallelogram(float size);
+    void drawCircle(double rad);
+    void drawSquare(double size);
+    void drawParallelogram(double size);
 
-    SDL_Texture* loadTexture(std::string path);
-    SDL_Texture* textTexture(std::string text, SDL_Rect* srcRest, SDL_Rect* desRect, float _x = 0, float _y = 0);
-    SDL_Texture* loadImage(std::string text, SDL_Rect* srcRest, SDL_Rect* desRect, float _x = 0, float _y = 0);
+    SDL_Texture* loadTexture(std::string filepath);
+    SDL_Texture* textTexture(std::string text, SDL_Rect* srcRest, SDL_Rect* desRect, double _x = 0, double _y = 0);
+    SDL_Texture* loadImage(std::string text, SDL_Rect* srcRest, SDL_Rect* desRect, double _x = 0, double _y = 0);
     bool createImage(SDL_Texture* texture);
 };
 
