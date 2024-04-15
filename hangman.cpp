@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     WINDOWS* window =  new WINDOWS(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
     srand(time(0));                            // random seeds
     HangmanGame* hangman = new HangmanGame(window, PLAY_TIME);  // initialize game
-    window->Font("VeraMoBd.ttf", 30);         // text font and size
+    window->Font("Font.ttf", 30);               // text font and size
     while (hangman->gameplay)                  // while player is playing game
     {
         hangman->startGame();                  // start a game
