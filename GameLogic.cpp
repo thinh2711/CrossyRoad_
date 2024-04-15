@@ -258,7 +258,7 @@ void HangmanGame::chooseDiffEvent() {
             gameplay = false;
             quit = true;
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) {
-            playing = false;
+            gameplay = false;
         } else if (event.type == SDL_KEYUP) {
             string keyName = SDL_GetKeyName(event.key.keysym.sym);
             if (keyName.length() == 1 && keyName[0] >= '1' && keyName[0] <= '5')
@@ -272,4 +272,13 @@ void HangmanGame::chooseDiffEvent() {
                 }
         }
     }
+}
+
+void HangmanGame::renderDiff() {
+    window->createImageBackground("hang0.png");
+    window->createTextTexture("Category: " + name , 100, 50);
+    window->createTextTexture("Choose word difficulty:", 100, 100);
+    window->createTextTexture("1. Easy", 150, 150);
+    window->createTextTexture("2. Hard", 150, 200);
+    window->updateScreen();
 }
