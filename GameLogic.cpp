@@ -95,6 +95,7 @@ void HangmanGame::startGame() {
         return;
     }
     system("cls");
+    choosefileName();
     
     initWord();
     guessedWord = string(secretword.length(), '-');
