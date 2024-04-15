@@ -1,46 +1,28 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <iostream>
+#include "GameLogic.h"
+#include "windows.h"
 
-using namespace std; 
+using namespace std;
 
-int main(int argc, char** argv) {
-    SDL_Init(SDL_INIT_VIDEO);              // Khởi tạo SDL2
+const int PLAY_TIME = 90;              
+const int SCREEN_WIDTH = 950;           
+const int SCREEN_HEIGHT = 900;          
+const string WINDOW_TITLE = "HANG MAN";  
 
-    // Tạo cửa sổ
-    SDL_Window* window = SDL_CreateWindow("Hang man",
-                                          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                          640, 480,
-                                          SDL_WINDOW_SHOWN);
-
-    // Tạo renderer
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
-    // Tải hình ảnh
-    SDL_Surface* image = IMG_Load("image/hang1.png");
-    if (!image) {
-        cout << "Can't " ;
-        // handle error
+int main(int argc, char* argv[]) {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    WINDOWS* window =  new WINDOWS(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
+    srand(time(0));                            // random seeds
+    HangmanGame* hangman = new HangmanGame(window, PLAY_TIME);  // initialize game
+    window->Font("VeraMoBd.ttf", 30);         // text font and size
+    while (hangman->gameplay)                  // while player is playing game
+    {
+        hangman->startGame();                  // start a game
+        do {                                   // initialize game loop for rendering
+            hangman->renderGameSDL();          // render SDL game
+            hangman->guessEvent();             // handle SDL keypress event
+            hangman->handleGuess();            // handle game based on event
+        } while (hangman->guessing());         // render game if the player is guessing
+        hangman->gameOver();                   // handle game over data and render SDL
     }
-
-    // Tạo texture từ hình ảnh
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
-
-    // Vẽ texture lên renderer
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
-
-    // Hiển thị renderer
-    SDL_RenderPresent(renderer);
-
-    // Đợi 5 giây
-    SDL_Delay(5000);
-
-    // Dọn dẹp và thoát
-    SDL_DestroyTexture(texture);
-    SDL_FreeSurface(image);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
     return 0;
 }
