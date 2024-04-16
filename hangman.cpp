@@ -10,6 +10,7 @@ const string WINDOW_TITLE = "HANG MAN";
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Init(SDL_INIT_AUDIO);
     WINDOWS* window =  new WINDOWS(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
     srand(time(0));                            // random seeds
     HangmanGame* hangman = new HangmanGame(window, PLAY_TIME);  // initialize game
@@ -21,6 +22,7 @@ int main(int argc, char* argv[]) {
             hangman->renderGameSDL();          // render SDL game
             hangman->guessEvent();             // handle SDL keypress event
             hangman->handleGuess();            // handle game based on event
+            hangman->updateTimeLeft();         // update game time
         } while (hangman->guessing());         // render game if the player is guessing
         hangman->gameOver();                   // handle game over data and render SDL
     }
