@@ -51,7 +51,7 @@ void HangmanGame::badGuessed() {
 }
 
 bool HangmanGame::guessing() {
-    if(guessedWord != secretword && badGuessCount < MAX_BAD_GUESS && gameplay) {
+    if(guessedWord != secretword && badGuessCount < MAX_BAD_GUESS && gameplay && !quit ) {
         return true;
     }
     return false;
@@ -106,7 +106,7 @@ void HangmanGame::startGame() {
     badGuess = "";
     suggested = 0;
     guessedString = "";
-    
+
     for (unsigned int i = 0; i < secretword.length(); i++)
         {
             if (secretword[i] == ' ')
@@ -407,4 +407,22 @@ void HangmanGame::createGameOverSDL() {
         SDL_Delay(200);
         ++imageIndx %= 4;
     }
+}
+
+void HangmanGame::planeEvent(SDL_Event e, bool& skip) {
+    if (SDL_PollEvent(&e)) {
+        if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_SPACE)
+            skip = true;
+        if (e.type == SDL_QUIT) {
+            gameplay = false;
+            quit = true;
+            skip = true;
+        }
+    }
+}
+
+void HangmanGame::updateTimeLeft() {
+    time_t now;
+    time(&now);
+    timeLeft = playTime - difftime(now, startTime) + animatedTime;
 }

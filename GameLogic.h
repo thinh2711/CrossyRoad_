@@ -61,6 +61,7 @@ class HangmanGame {
     void renderDiff();                  // render difficulty window
     void chooseDiffEvent();             // handle choose difficulty event
 
+    void updateTimeLeft();                  // update time left for playing game
     void renderPlane(char, int);        // render flying plane
     void planeEvent(SDL_Event, bool&);  // handle event while the plane is flying
 };
