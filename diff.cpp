@@ -33,9 +33,7 @@ string chooseWord(const string& fileName, int difficult) {
     int n = vocabulary.size();
     if (n > 0) {
         string word;
-        do {
-            word = vocabulary[rand() % n];
-        } while ((word.length() > 5 && difficult) || (word.length() < 5 && !difficult));
+        word = vocabulary[rand() % n];
         return word;
     } else {
         return " ";
@@ -49,3 +47,4 @@ bool contain(string word, char guess) {
         return false;
     }
 }
+

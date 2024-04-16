@@ -86,6 +86,7 @@ void HangmanGame::updateGuessedWord() {
         }
     }
     guessedString += guessChar;
+    renderPlane(guessChar, countguessChar);
 }
 
 void HangmanGame::startGame() {
@@ -322,6 +323,7 @@ void HangmanGame::handleGuess() {
                 } else if (!contain(badGuess, guessChar)) 
                     {
                         badGuessed();
+                        renderPlane(guessChar, 0);
                     }
     
 }
