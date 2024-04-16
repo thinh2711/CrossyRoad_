@@ -426,3 +426,22 @@ void HangmanGame::updateTimeLeft() {
     time(&now);
     timeLeft = playTime - difftime(now, startTime) + animatedTime;
 }
+
+void HangmanGame::renderPlane(char guessedChar, int num) {
+    time_t Start, End;
+    time(&Start);
+    int i = -300;
+    bool check = false;
+    while (i < 1000 && !check) {
+        SDL_Event event;
+        planeEvent(event, check);
+        window->createImageBackground("hang0.png");
+        window->createImage("plane.png", i, 0);
+        window->createTextTexture(string("There ") + (num == 1 ? "is " : "are ") + to_string(num) + " of " + guessedChar, i + 165, 215);
+        window->createTextTexture("Press 'Space' to skip", 300, 850);
+        window->updateScreen();
+        i += 5;
+    }
+    time(&End);
+    animatedTime += difftime(End, Start);
+}
