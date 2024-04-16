@@ -1,23 +1,13 @@
 Yemen
 Vietnam
-Uzbekistan
-United Arab Emirates
 Thailand
-Turkmenistan
 Turkey
-Timor Leste
-Tajikistan
 Syria
-State of Palestine
 Sri Lanka
-South Korea
 Singapore
-Saudi Arabia
 Qatar
-Philippines
 Pakistan
 Oman
-North Korea
 Nepal
 Myanmar
 Mongolia
@@ -25,9 +15,7 @@ Maldives
 Malaysia
 Lebanon
 Laos
-Kyrgyzstan
 Kuwait
-Kazakhstan
 Jordan
 Japan
 Israel
@@ -41,8 +29,5 @@ Cyprus
 Cambodia
 Brunei
 Bhutan
-Bangladesh
 Bahrain
-Azerbaijan
 Armenia
-Afghanistan
