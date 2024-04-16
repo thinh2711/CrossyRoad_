@@ -107,6 +107,8 @@ void HangmanGame::startGame() {
     badGuess = "";
     suggested = 0;
     guessedString = "";
+    animatedTime = 0;
+    time(&startTime);
 
     for (unsigned int i = 0; i < secretword.length(); i++)
         {
@@ -148,7 +150,7 @@ void HangmanGame::getSuggest() {
 
 void HangmanGame::renderGameSDL() {
     window->createImageBackground("hang" + to_string(badGuessCount) + ".png");
-
+    window->createTextTexture("Time: " + to_string(timeLeft), 750, 5);
     window->createTextTexture("Win : " + to_string(countwin), 750, 45);
     window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
     window->createTextTexture("Current Guess    :     " + guessedWord, 100, 750);
@@ -379,14 +381,13 @@ void HangmanGame::renderGameOverSDL(int imageIndx) {
     } else {
         status = "hanged";
     }
+    window->createImageBackground(status + to_string(imageIndx) + ".png");
     if (timeLeft <= 0)
     {
         window->createTextTexture("Time Up!!!", 750, 5);
     }
     window->createTextTexture("Win : " + to_string(countwin), 750, 45);
     window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
-
-    window->createImageBackground(status + to_string(imageIndx) + ".png");
     
     if (guessedWord == secretword)
     {
