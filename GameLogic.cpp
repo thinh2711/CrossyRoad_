@@ -2,6 +2,7 @@
 
 #include <ctime>
 #include <unordered_map>
+#include "SDL2/SDL_mixer.h"
 
 #include "windows.h"
 #include "diff.h"
@@ -12,6 +13,11 @@ HangmanGame::HangmanGame(WINDOWS* WINDOWS, int time) : window(WINDOWS), playTime
     gameplay = true;
     countwin = 0;
     countloss = 0;
+     // Khởi tạo SDL
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+
+    // Khởi tạo hệ thống âm thanh
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 void HangmanGame::initWord() {
@@ -51,7 +57,7 @@ void HangmanGame::badGuessed() {
 }
 
 bool HangmanGame::guessing() {
-    if(guessedWord != secretword && badGuessCount < MAX_BAD_GUESS && gameplay && !quit ) {
+    if(guessedWord != secretword && badGuessCount < MAX_BAD_GUESS && gameplay && !quit && timeLeft > 0) {
         return true;
     }
     return false;
@@ -425,9 +431,9 @@ void HangmanGame::planeEvent(SDL_Event e, bool& skip) {
 }
 
 void HangmanGame::updateTimeLeft() {
-    time_t now;
-    time(&now);
-    timeLeft = playTime - difftime(now, startTime) + animatedTime;
+    time_t now_;
+    time(&now_);
+    timeLeft = playTime - difftime(now_, startTime) + animatedTime;
 }
 
 void HangmanGame::renderPlane(char guessedChar, int num) {
@@ -435,6 +441,11 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
     time(&Start);
     int i = -300;
     bool check = false;
+
+    Mix_Chunk *planeSound = Mix_LoadWAV("sound/plane.wav");
+    if (!planeSound) {
+        window->wrongSDL(cout, "Mix_LoadWAV", true);
+    }
     while (i < 1000 && !check) {
         SDL_Event event;
         planeEvent(event, check);
@@ -444,7 +455,16 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
         window->createTextTexture("Press 'Space' to skip", 300, 850);
         window->updateScreen();
         i += 5;
+
+        // Phát âm thanh
+        Mix_PlayChannel(-1, planeSound, 0);
+
+        // Điều chỉnh tốc độ
+        SDL_Delay(10);
     }
     time(&End);
     animatedTime += difftime(End, Start);
+
+    // Giải phóng tài nguyên âm thanh
+    Mix_FreeChunk(planeSound);
 }
