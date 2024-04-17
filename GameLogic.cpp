@@ -83,6 +83,7 @@ void HangmanGame::updateSuggest() {
 }
 
 void HangmanGame::updateGuessedWord() {
+
     int size = guessedWord.length(), countguessChar = 0;
     for (int i = 0; i < size; i++) {
         if (secretword[i] == guessChar) 
@@ -201,7 +202,13 @@ void HangmanGame::choosefileName() {
 }
 
 void HangmanGame::choosefileNameEvent() {
+    
     SDL_Event event;
+    Mix_Chunk *all = Mix_LoadWAV("sound/All fields.wav");
+    Mix_Chunk *fruits = Mix_LoadWAV("sound/Fruits Easy.wav");
+    Mix_Chunk *asia = Mix_LoadWAV("sound/Asia Countries Easy.wav");
+    Mix_Chunk *jobs = Mix_LoadWAV("sound/Jobs Easy.wav");
+    Mix_Chunk *plants = Mix_LoadWAV("sound/Plants Easy.wav");
     if (SDL_WaitEvent(&event)) 
     {
         if (event.type == SDL_QUIT) 
@@ -222,32 +229,57 @@ void HangmanGame::choosefileNameEvent() {
                         case '1':
                             fileName = "all.txt";
                             name = "All fields";
+                            Mix_PlayChannel(-1, all, 0);
+                            SDL_Delay(1000);
                             break;
                         case '2':
                             fileName = "fruits.txt";
-                            name = "Fruits";
+                            name = "Fruits Easy";
+                            Mix_PlayChannel(-1, fruits, 0);
+                            SDL_Delay(1000);
                                 break;
                         case '3':
                             fileName = "asia.txt";
-                            name = "Asia Countries";
+                            name = "Asia Countries Easy";
+                            Mix_PlayChannel(-1, asia, 0);
+                            SDL_Delay(1000);
                             break;
                         case '4':
                             fileName = "jobs.txt";
-                            name = "Jobs";
+                            name = "Jobs Easy";
+                            Mix_PlayChannel(-1, jobs, 0);
+                            SDL_Delay(1000);
                             break;
                         case '5':
                             fileName = "plants.txt";
-                            name = "Plants";
+                            name = "Plants Easy";
+                            Mix_PlayChannel(-1, plants, 0);
+                            SDL_Delay(1000);
                             break;
                         }
                     }
                     
                 }
     }
+
+    Mix_FreeChunk(all);
+    Mix_FreeChunk(fruits);
+    Mix_FreeChunk(asia);
+    Mix_FreeChunk(jobs);
+    Mix_FreeChunk(plants);
 }
 
 void HangmanGame::choosefileNameEventHard() {
     SDL_Event event;
+    Mix_Chunk *all = Mix_LoadWAV("sound/All fields.wav");
+    Mix_Chunk *fruits = Mix_LoadWAV("sound/Fruits Hard.wav");
+    Mix_Chunk *asia = Mix_LoadWAV("sound/Asia Countries Hard.wav");
+    Mix_Chunk *jobs = Mix_LoadWAV("sound/Jobs Hard.wav");
+    Mix_Chunk *plants = Mix_LoadWAV("sound/Plants Hard.wav");
+    if (!all || !fruits || !asia || !jobs || !plants) 
+    {
+        window->wrongSDL(cout, "Mix_LoadWAV", true);
+    }
     if (SDL_WaitEvent(&event)) 
     {
         if (event.type == SDL_QUIT) 
@@ -268,28 +300,43 @@ void HangmanGame::choosefileNameEventHard() {
                         case '1':
                             fileName = "all.txt";
                             name = "All fields";
+                            Mix_PlayChannel(-1, all, 0);
+                            SDL_Delay(1000);
                             break;
                         case '2':
                             fileName = "fruitsDiff.txt";
                             name = "Fruits Hard";
-                                break;
+                            Mix_PlayChannel(-1, fruits, 0);
+                            SDL_Delay(1000);
+                            break;
                         case '3':
                             fileName = "asiaDiff.txt";
                             name = "Asia Countries Hard";
+                            Mix_PlayChannel(-1, asia, 0);
+                            SDL_Delay(1000);
                             break;
                         case '4':
                             fileName = "jobsDiff.txt";
                             name = "Jobs Hard";
+                            Mix_PlayChannel(-1, jobs , 0);
+                            SDL_Delay(1000);
                             break;
                         case '5':
                             fileName = "plantsDiff.txt";
                             name = "Plants Hard";
+                            Mix_PlayChannel(-1, plants, 0);
+                            SDL_Delay(1000);
                             break;
                         }
                     }
                     
                 }
     }
+    Mix_FreeChunk(all);
+    Mix_FreeChunk(fruits);
+    Mix_FreeChunk(asia);
+    Mix_FreeChunk(jobs);
+    Mix_FreeChunk(plants);
 }
 
 void HangmanGame::renderfileNameEasy() {
@@ -312,6 +359,7 @@ void HangmanGame::renderfileNameHard() {
     window->createTextTexture("4. Jobs Hard", 150, 250);
     window->createTextTexture("5. Plants Hard", 150, 300);
     window->updateScreen();
+    
 }
 
 void HangmanGame::handleGuess() {
@@ -338,6 +386,8 @@ void HangmanGame::handleGuess() {
 
 void HangmanGame::chooseDiffEvent() {
     SDL_Event event;
+    Mix_Chunk *easy = Mix_LoadWAV("sound/easy.wav");
+    Mix_Chunk *hard = Mix_LoadWAV("sound/difficult.wav");
     if (SDL_WaitEvent(&event)) 
     {
         if (event.type == SDL_QUIT) {
@@ -352,14 +402,20 @@ void HangmanGame::chooseDiffEvent() {
                 switch (key[0]) {
                     case '1':
                         diff = 0;
+                        Mix_PlayChannel(-1, easy, 0);
+                        SDL_Delay(1000);
                         break;
                     case '2':
                         diff = 1;
+                        Mix_PlayChannel(-1, hard, 0);  
+                        SDL_Delay(1000);
                         break;
                 }
             }
         }
     }
+    Mix_FreeChunk(easy);
+    Mix_FreeChunk(hard);
 }
 
 void HangmanGame::renderDiff() {
@@ -409,13 +465,42 @@ void HangmanGame::renderGameOverSDL(int imageIndx) {
 
 void HangmanGame::createGameOverSDL() {
     int imageIndx = 0;
+
+    Mix_Chunk *gameOverSound = Mix_LoadWAV("sound/gameover.wav");
+    if (!gameOverSound) {
+        window->wrongSDL(cout, "Mix_LoadWAV", true);
+    }
+    Mix_Chunk *winSound = Mix_LoadWAV("sound/victory.wav");
+    if(!winSound)
+    {
+        window->wrongSDL(cout, "Mix_LoadWAV", true);
+    }
     while (!quit) {
         SDL_Event e;
         checkContinue(e);
         renderGameOverSDL(imageIndx);
         SDL_Delay(200);
         ++imageIndx %= 4;
+
+        if(guessedWord == secretword )
+        {
+            // Phát âm thanh
+            Mix_PlayChannel(-1, winSound, 0);
+
+            // Điều chỉnh tốc độ
+            SDL_Delay(10);
+        }
+        else 
+        {
+            Mix_PlayChannel(-1, gameOverSound, 0);
+            SDL_Delay(10);
+        }
+        
     }
+
+    // Giải phóng tài nguyên âm thanh
+    Mix_FreeChunk(gameOverSound);
+    Mix_FreeChunk(winSound);
 }
 
 void HangmanGame::planeEvent(SDL_Event e, bool& skip) {
@@ -446,6 +531,7 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
     if (!planeSound) {
         window->wrongSDL(cout, "Mix_LoadWAV", true);
     }
+
     while (i < 1000 && !check) {
         SDL_Event event;
         planeEvent(event, check);
@@ -462,6 +548,7 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
         // Điều chỉnh tốc độ
         SDL_Delay(10);
     }
+
     time(&End);
     animatedTime += difftime(End, Start);
 
