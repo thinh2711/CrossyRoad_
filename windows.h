@@ -1,9 +1,8 @@
 #ifndef WINDOWS_H
 #define WINDOWS_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include <iostream>
 
 #include "draw.h"
@@ -27,6 +26,8 @@ class WINDOWS {
     void createImageBackground(string fileName);
     void createImage(string fileName, int x_, int y_);
     void updateScreen();
+    bool Menu();
+    
 };
 
 #endif  // WINDOWS_H

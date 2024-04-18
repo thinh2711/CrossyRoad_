@@ -157,9 +157,10 @@ void HangmanGame::getSuggest() {
 
 void HangmanGame::renderGameSDL() {
     window->createImageBackground("hang" + to_string(badGuessCount) + ".png");
-    window->createTextTexture("Time: " + to_string(timeLeft), 750, 5);
-    window->createTextTexture("Win : " + to_string(countwin), 750, 45);
-    window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
+    window->createTextTexture("Time: " + to_string(timeLeft), 700, 5);
+    window->createTextTexture("Win : " + to_string(countwin), 700, 45);
+    window->createTextTexture("Loss: " + to_string(countloss), 700, 85);
+    window->createTextTexture( name, 700, 125);
     window->createTextTexture("Current Guess    :     " + guessedWord, 100, 750);
     window->createTextTexture("Bad Guesses      :     " + badGuess, 100, 800);
     window->createTextTexture("Used suggestions :     " + to_string(suggested) + "/" + to_string(maxSuggest) + "   (Press 'Space')", 100, 850);
@@ -446,14 +447,15 @@ void HangmanGame::renderGameOverSDL(int imageIndx) {
     window->createImageBackground(status + to_string(imageIndx) + ".png");
     if (timeLeft <= 0)
     {
-        window->createTextTexture("Time Up!!!", 750, 5);
+        window->createTextTexture("Time Up!!!", 700, 5);
     }
-    window->createTextTexture("Win : " + to_string(countwin), 750, 45);
-    window->createTextTexture("Loss: " + to_string(countloss), 750, 85);
+    window->createTextTexture("Win : " + to_string(countwin), 700, 45);
+    window->createTextTexture("Loss: " + to_string(countloss), 700, 85);
+    window->createTextTexture( name, 700, 125);
     
     if (guessedWord == secretword)
     {
-        window->createTextTexture("Congrats!!! You are free.", 100, 750);
+        window->createTextTexture("Congratulations!!! You are free.", 100, 750);
     }
     else   {
         window->createTextTexture("Game Over!!! You are hanged!", 100, 750);
@@ -527,6 +529,8 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
     int i = -300;
     bool check = false;
 
+    Mix_PauseMusic(); // Tạm dừng nhạc nền
+
     Mix_Chunk *planeSound = Mix_LoadWAV("sound/plane.wav");
     if (!planeSound) {
         window->wrongSDL(cout, "Mix_LoadWAV", true);
@@ -549,9 +553,12 @@ void HangmanGame::renderPlane(char guessedChar, int num) {
         SDL_Delay(10);
     }
 
+    Mix_ResumeMusic(); // Tiếp tục phát nhạc nền
+
     time(&End);
     animatedTime += difftime(End, Start);
 
     // Giải phóng tài nguyên âm thanh
     Mix_FreeChunk(planeSound);
 }
+

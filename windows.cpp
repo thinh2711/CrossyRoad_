@@ -1,7 +1,7 @@
 #include "windows.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 #include <iostream>
 
@@ -22,6 +22,12 @@ WINDOWS::WINDOWS(string title_, int width_, int height_) : title(title_), width(
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     SDL_RenderSetLogicalSize(renderer, width, height);
 }
+WINDOWS::~WINDOWS() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    TTF_Quit();
+    SDL_Quit();
+}
 void WINDOWS::wrongSDL(ostream& os, const string& msg, bool check) {
     os << msg << " Error: " << SDL_GetError() << endl;
     if (check) {
@@ -37,13 +43,13 @@ void WINDOWS::createImage(string fileName, int x_, int y_) {
     SDL_Rect srcRest;
     SDL_Rect desRect;
     SDL_Texture* texture = NULL;
-    texture = draw->loadImage("image\\" + fileName, &srcRest, &desRect, x_, y_);
+    texture = draw->loadImage("image/" + fileName, &srcRest, &desRect, x_, y_);
     SDL_RenderCopy(renderer, texture, &srcRest, &desRect);
     SDL_DestroyTexture(texture);
 }
 void WINDOWS::createImageBackground(string fileName) {
     SDL_Texture* texture = NULL;
-    texture = draw->loadTexture("image\\" + fileName);
+    texture = draw->loadTexture("image/" + fileName);
     draw->createImage(texture);
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_DestroyTexture(texture);
@@ -59,9 +65,40 @@ void WINDOWS::createTextTexture(string text, int x_, int y_) {
 void WINDOWS::updateScreen() {
     SDL_RenderPresent(renderer);
 }
-WINDOWS::~WINDOWS() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    TTF_Quit();
-    SDL_Quit();
+
+bool WINDOWS::Menu() {
+    bool quit = false;
+    SDL_Event e;
+    SDL_Texture* menuTexture = draw->loadTexture("image/menu.bmp");
+
+    // Render texture lên màn hình
+    SDL_RenderCopy(renderer, menuTexture, NULL, NULL);
+
+    // Cập nhật màn hình
+    SDL_RenderPresent(renderer);
+
+    while (!quit) 
+    {
+        // Xử lý các sự kiện
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT) {
+                quit = true;
+            }
+            // Xử lý sự kiện nhấp chuột
+            if (e.type == SDL_MOUSEBUTTONUP ) {
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                // Kiểm tra xem chuột có nằm trong vùng ô vuông không (ví dụ: ô vuông có tọa độ (100, 100) và kích thước 50x50)
+                if (mouseX >= 831 && mouseX <= 903 && mouseY >= 718 && mouseY <= 792) {
+                    // Người dùng nhấp chuột vào ô vuông, xử lý tương ứng ở đây
+                    cout << "Clicked on square!" << endl;
+                    
+                    return 1;
+                }
+            }
+        }
+    
+    }
+    return false;
 }
+
