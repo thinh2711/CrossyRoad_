@@ -16,13 +16,20 @@ int main(int argc, char* argv[]) {
     if (!backgroundMusic) {
         cout << "Failed to load background music! SDL_mixer Error: " << Mix_GetError() << endl;
     }
+    Mix_Music *menuMusic = Mix_LoadMUS("sound/menu1.mp3"); // Load menu music
+    if (!menuMusic) {
+        cout << "Failed to load menu music! SDL_mixer Error: " << Mix_GetError() << endl;
+    }
 
     WINDOWS* window =  new WINDOWS(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
     srand(time(0));                            // random seeds
     HangmanGame* hangman = new HangmanGame(window, PLAY_TIME);  // initialize game
     window->Font("Font.ttf", 25);               // text font and size
 
+    Mix_PlayMusic(menuMusic, -1); // Play menu music
     window->Menu();                   // render menu
+    Mix_HaltMusic();                        // stop menu music
+
     if(window->Menu() == true) {          // if player choose to play game
         while (hangman->gameplay)                  // while player is playing game
         {
@@ -40,6 +47,7 @@ int main(int argc, char* argv[]) {
             hangman->gameOver();                    // handle game over data and render SDL
         }
         Mix_FreeMusic(backgroundMusic);
+        Mix_FreeMusic(menuMusic);
     }
     return 0;
 }

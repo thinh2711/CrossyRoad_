@@ -38,6 +38,7 @@ void HangmanGame::guessEvent() {
             quit = true;
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) {
             gameplay = false;
+            exit(0);
         } else if (event.type == SDL_KEYUP) {
             string keyName = SDL_GetKeyName(event.key.keysym.sym);
             if (keyName == "Escape")
@@ -219,6 +220,7 @@ void HangmanGame::choosefileNameEvent() {
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
             {
                 gameplay = false;
+                exit(0);
             } else if (event.type == SDL_KEYUP) 
                 {   
                     string key = SDL_GetKeyName(event.key.keysym.sym);
@@ -259,7 +261,10 @@ void HangmanGame::choosefileNameEvent() {
                             break;
                         }
                     }
-                    
+                    else if (key.length() == 1 && key[0] == '6')
+                    {
+                        chooseDiff();
+                    }
                 }
     }
 
@@ -290,6 +295,7 @@ void HangmanGame::choosefileNameEventHard() {
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) 
             {
                 gameplay = false;
+                exit(0);
             } else if (event.type == SDL_KEYUP) 
                 {   
                     string key = SDL_GetKeyName(event.key.keysym.sym);
@@ -328,7 +334,12 @@ void HangmanGame::choosefileNameEventHard() {
                             Mix_PlayChannel(-1, plants, 0);
                             SDL_Delay(1000);
                             break;
+                        
                         }
+                    }
+                    else if (key.length() == 1 && key[0] == '6')
+                    {
+                        chooseDiff();
                     }
                     
                 }
@@ -348,6 +359,7 @@ void HangmanGame::renderfileNameEasy() {
     window->createTextTexture("3. Asia Countries", 150, 200);
     window->createTextTexture("4. Jobs", 150, 250);
     window->createTextTexture("5. Plants", 150, 300);
+    window->createTextTexture("6. Change difficulty", 150, 350);
     window->updateScreen();
 }
 
@@ -359,6 +371,7 @@ void HangmanGame::renderfileNameHard() {
     window->createTextTexture("3. Asia Countries Hard", 150, 200);
     window->createTextTexture("4. Jobs Hard", 150, 250);
     window->createTextTexture("5. Plants Hard", 150, 300);
+    window->createTextTexture("6. Change difficulty", 150, 350);
     window->updateScreen();
     
 }
@@ -396,6 +409,7 @@ void HangmanGame::chooseDiffEvent() {
             quit = true;
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) {
             gameplay = false;
+            exit(0);
         } else if (event.type == SDL_KEYUP) {
             string key = SDL_GetKeyName(event.key.keysym.sym);
             if (key.length() == 1 && key[0] >= '1' && key[0] <= '2')

@@ -2,7 +2,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
-
+#include "SDL2/SDL_mixer.h"
 #include <iostream>
 
 #include "draw.h"
@@ -70,14 +70,14 @@ bool WINDOWS::Menu() {
     bool quit = false;
     SDL_Event e;
     SDL_Texture* menuTexture = draw->loadTexture("image/menu.bmp");
-
+    
     // Render texture lên màn hình
     SDL_RenderCopy(renderer, menuTexture, NULL, NULL);
 
     // Cập nhật màn hình
     SDL_RenderPresent(renderer);
 
-    while (!quit) 
+    while (!quit)
     {
         // Xử lý các sự kiện
         while (SDL_PollEvent(&e) != 0) {
@@ -90,15 +90,24 @@ bool WINDOWS::Menu() {
                 SDL_GetMouseState(&mouseX, &mouseY);
                 // Kiểm tra xem chuột có nằm trong vùng ô vuông không (ví dụ: ô vuông có tọa độ (100, 100) và kích thước 50x50)
                 if (mouseX >= 831 && mouseX <= 903 && mouseY >= 718 && mouseY <= 792) {
+                    
                     // Người dùng nhấp chuột vào ô vuông, xử lý tương ứng ở đây
                     cout << "Clicked on square!" << endl;
-                    
-                    return 1;
+                    quit = true;
                 }
             }
+            if (e.type == SDL_KEYDOWN) {
+                    // Kiểm tra xem phím nhấn có phải là ESC hay không
+                    if (e.key.keysym.sym == SDLK_ESCAPE) {
+                        
+                        // Người dùng nhấn phím ESC, thoát khỏi vòng lặp
+                        exit(0);
+                    }
+                }
         }
     
     }
-    return false;
+    
+    return quit;
 }
 
