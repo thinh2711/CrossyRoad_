@@ -72,25 +72,6 @@ class DRAW {
 
     void clearWithBgColor(SDL_Color color);
 
-    void moveForward(double length);
-    void jumpForward(double length);
-    void moveBackward(double length) 
-    {
-        moveForward(-length);
-    }
-    void jumpBackward(double length) 
-    {
-        jumpForward(-length);
-    }
-    void turnLeft(double angle)
-    {
-        setAngle(this->angle + angle);
-    }
-    void turnRight(double angle) 
-    {
-        turnLeft(-angle);
-    }
-
     void getRandomColor();
 
     void drawCircle(double rad);

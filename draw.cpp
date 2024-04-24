@@ -82,6 +82,7 @@ SDL_Texture* DRAW::textTexture(string text, SDL_Rect* srcRest, SDL_Rect* desRect
     desRect->h = srcRest->h;
     return texture;
 }
+
 bool DRAW::createImage(SDL_Texture* texture) {
     if (texture == NULL) return false;
     SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -106,41 +107,5 @@ void DRAW::getRandomColor() {
     Uint8 b = rand() % 256;
     SDL_Color color = {r, g, b};
     setColor(color);
-}
-
-void DRAW::moveForward(double length) {
-    double prevX = x, prevY = y;
-    jumpForward(length);
-    SDL_RenderDrawLine(renderer, (int)prevX, (int)prevY, (int)x, (int)y);
-}
-
-void DRAW::jumpForward(double length) {
-    double rad = (angle / 180) * M_PI;
-    x += (cos(rad) * length);
-    y -= (sin(rad) * length);
-}
-
-void DRAW::drawSquare(double size) {
-    for (int i = 0; i < 4; ++i) {
-        turnLeft(90);
-        moveForward(size);
-    }
-}
-
-void DRAW::drawParallelogram(double size) {
-    for (int i = 0; i < 2; ++i) {
-        moveForward(size);
-        turnLeft(60);
-        moveForward(size);
-        turnLeft(120);
-    }
-}
-void DRAW::drawCircle (double rad) {
-    double prevX = x, prevY = y;
-    for (int i = 0; i < 360; i++) {
-        x = prevX + rad * cos(i * M_PI / 180);
-        y = prevY - rad * sin(i * M_PI / 180);
-        SDL_RenderDrawPoint(renderer, (int)x, (int)y);
-    }
 }
 
