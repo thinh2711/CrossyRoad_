@@ -4,6 +4,6 @@
 
 std::string normalize(const std::string& s);
 std::string chooseWord(const std::string& fileName, int difficult);
-bool contains(std::string word, char guess);
+bool contain(std::string word, char guess);
 
 #endif 

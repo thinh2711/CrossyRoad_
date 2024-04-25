@@ -38,7 +38,7 @@ void HangmanGame::guessEvent() {
             quit = true;
         } else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE) {
             gameplay = false;
-            exit(0);
+            
         } else if (event.type == SDL_KEYUP) {
             string keyName = SDL_GetKeyName(event.key.keysym.sym);
             if (keyName == "Escape")
@@ -354,24 +354,24 @@ void HangmanGame::choosefileNameEventHard() {
 void HangmanGame::renderfileNameEasy() {
     window->createImageBackground("hang0.png");
     window->createTextTexture("Choose word category:", 100, 50);
-    window->createTextTexture("1. All fields", 150, 100);
-    window->createTextTexture("2. Fruits", 150, 150);
-    window->createTextTexture("3. Asia Countries", 150, 200);
-    window->createTextTexture("4. Jobs", 150, 250);
-    window->createTextTexture("5. Plants", 150, 300);
-    window->createTextTexture("6. Change difficulty", 150, 350);
+    window->createTextTexture("Press 1 : All fields", 150, 100);
+    window->createTextTexture("Press 2 : Fruits", 150, 150);
+    window->createTextTexture("Press 3 : Asia Countries", 150, 200);
+    window->createTextTexture("Press 4 : Jobs", 150, 250);
+    window->createTextTexture("Press 5 : Plants", 150, 300);
+    window->createTextTexture("Press 6 : Back to choose difficulty", 150, 350);
     window->updateScreen();
 }
 
 void HangmanGame::renderfileNameHard() {
     window->createImageBackground("hang0.png");
     window->createTextTexture("Choose word category:", 100, 50);
-    window->createTextTexture("1. All fields", 150, 100);
-    window->createTextTexture("2. Fruits Hard", 150, 150);
-    window->createTextTexture("3. Asia Countries Hard", 150, 200);
-    window->createTextTexture("4. Jobs Hard", 150, 250);
-    window->createTextTexture("5. Plants Hard", 150, 300);
-    window->createTextTexture("6. Change difficulty", 150, 350);
+    window->createTextTexture("Press 1 : All fields", 150, 100);
+    window->createTextTexture("Press 2 : Fruits Hard", 150, 150);
+    window->createTextTexture("Press 3 : Asia Countries Hard", 150, 200);
+    window->createTextTexture("Press 4 : Jobs Hard", 150, 250);
+    window->createTextTexture("Press 5 : Plants Hard", 150, 300);
+    window->createTextTexture("Press 6 : Back to choose difficulty", 150, 350);
     window->updateScreen();
     
 }
@@ -437,8 +437,8 @@ void HangmanGame::renderDiff() {
     window->createImageBackground("hang0.png");
     // window->createTextTexture("Category: " + name , 100, 50);
     window->createTextTexture("Choose word difficulty:", 100, 100);
-    window->createTextTexture("1. Easy", 150, 150);
-    window->createTextTexture("2. Hard", 150, 200);
+    window->createTextTexture("Press 1 : Easy", 150, 150);
+    window->createTextTexture("Press 2 : Hard", 150, 200);
     window->updateScreen();
 }
 

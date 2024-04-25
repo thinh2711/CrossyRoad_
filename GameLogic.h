@@ -51,8 +51,8 @@ class HangmanGame {
     void createGameOverSDL();           // initialize game over loop for rendering
 
     void choosefileName();              // Choose file of random word
-    void renderfileNameEasy();              // render file window easy
-    void renderfileNameHard();              // render file window hard
+    void renderfileNameEasy();          // render file window easy
+    void renderfileNameHard();          // render file window hard
 
     void choosefileNameEvent();         // handle choose file event
     void choosefileNameEventHard();     // handle choose hard file event
