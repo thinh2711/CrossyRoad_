@@ -7,14 +7,40 @@ _________________
 Hangman là một trò chơi từ vựng hấp dẫn, nơi bạn sẽ thử thách khả năng đoán chữ để cứu lấy "người treo cổ". Trong mỗi ván chơi, bạn sẽ được cho biết số chữ cái của từ cần đoán và mỗi lần đoán sai một chữ cái, một phần của hình ảnh người treo cổ sẽ được vẽ lên. Mục tiêu của bạn là đoán đúng từ trước khi hình ảnh người treo cổ được hoàn thiện. Trò chơi này không chỉ giúp luyện tập vốn từ vựng và khả năng suy luận mà còn mang lại những phút giây giải trí vô cùng thú vị.
 
 _______
-[Bắt đầu game](#bắt-đầu-game)
-[Chọn độ khó](#Chọn-độ-khó)
-[Chọn danh mục từ](#Chọn-danh-mục-từ)
-[Cách chơi](#Cách-chơi)
-[Kết thúc](#Kết-thúc)
+[1. Bắt đầu Game](#1-bắt-đầu-game)
+[2. Chọn độ khó](#2-chọn-độ-khó)
+[3. Chọn danh mục từ](#3-chọn-danh-mục-từ)
+[4. Cách chơi](#4-cách-chơi)
+[5. Kết thúc](#5-kết-thúc)
 
 __________________
-### 1 . Bắt đầu Game
+
+## A. Ways to download game
+
+### - Method 1: No code included.
+
+Tải game (được nén thành .zip) tại link sau:
+ 
+Cách này tiết kiệm bộ nhớ và thời gian tải đi rất nhiều.
+
+Giải nén game vào một thư mục và bật run.exe lên và chơi.
+
+### - Method 2: Include code and compilable.
+
+*Step 1:* Clone repo này về môi trường *Visual Studio Code*: [Link Repository](https://github.com/thinh2711/CrossyRoad_)
+
+
+![image](./image1/repo.png)
+
+
+*Step 2:* Mở *Terminal* dẫn đến file của game (có thể sử dụng tổ hợp phím *Ctrl + ALt + N*) điền chữ *make* sau đó nhấn *Enter*, chờ khoảng 10s và trải nghiệm trò chơi.
+
+![image](./image1/makefile.png)
+
+**Video demo game** [HANG MAN](https://drive.google.com/file/d/10ap3pNTMtJep7qQ4eVTMI6HLJI5_1mZB/view?usp=drive_link)
+
+__________________
+### 1. Bắt đầu Game
 
 
 Mở file exe để chơi game
@@ -24,7 +50,7 @@ Màn hình sẽ hiện ra
 Click chuột vào ô ![play](./image1/play.png) để có thể bắt đầu vào chơi game hoặc ấn phím **ESC** trên bàn phím để thoát
 
 ___________________
-### 2 . Chọn độ khó
+### 2. Chọn độ khó
 
 Có hai mức độ khó và dễ cho người lựa chọn
 ![Chọn độ khó](./image1/diff.png)
@@ -33,7 +59,7 @@ Người chơi có thể ấn phím **ESC** để thoát
 
 __________________
 
-### 3 . Chọn danh mục từ 
+### 3. Chọn danh mục từ 
 #### *Chế độ dễ*
 
 >Nếu người chơi chọn chế độ Dễ thì màn hình sẽ tiếp tục hiện ra 
@@ -57,7 +83,7 @@ Còn ngoài ra nếu muốn thoát khỏi màn hình chơi có thể ấn phím 
 Nếu muốn thoát khỏi màn hình chơi có thể ấn phím **ESC**
 
 
-### 4 . Cách chơi
+### 4. Cách chơi
 Sau khi chọn độ khó và lĩnh vực muốn chơi , người chơi sẽ bắt đầu tiến hành chơi game
 Người chơi sẽ phải tiến hành đoán các kí tự của từ được lấy ngẫu nhiên từ lĩnh vực đã chọn 
 Mỗi lần đoán sai , màn hình sẽ dần chạy ra các phần của người bị treo cổ , sau khi đã đoán sai đủ số lần mà màn hình hoàn thành in ra toàn bộ người bị treo cổ thì người chơi sẽ bị thua
@@ -70,7 +96,7 @@ Trong quá trình chơi nếu như người chơi cảm thấy khó quá có th�
 
 __________
 
-### 5 . Kết thúc
+### 5. Kết thúc
 >Người chơi dành chiến thắng khi đoán đúng từ bí mật
 ![demo](./image1/win.png)
 
